@@ -2,8 +2,8 @@
 # **********************************
 ; our $VERSION='0.01'
 # *******************
-; use strict; use warnings
-; use base qw ( Pipeline::Segment OpenFrame::Object )
+; use strict; use warnings; use utf8
+; use parent qw ( Pipeline::Segment OpenFrame::Object )
 
 ; use OpenFrame::Response
 
