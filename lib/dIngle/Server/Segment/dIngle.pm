@@ -2,27 +2,11 @@
 # ***************************************
 ; our $VERSION='0.01'
 # *******************
-; use base 'dIngle::Server::Segment'
+; use parent 'dIngle::Server::Segment'
 
-; BEGIN
-    { use dIngle
-    ; $dIngle::LOGGING    = 'Log::Log4Perl'
-    }
+; use dIngle
     
 ; use File::Basename qw/basename/
-
-; sub init
-    { my $self = shift
-    ; my %args = @_
-    ; my @init = delete($args{'module'})
-    ; dIngle->init(@init)
- 
-    ; $self->SUPER::init( %args )
-    }
-
-# Die Struktur mit der globalen Chest ist nur beding geeignet.
-# Was passiert wenn mehrere Module parallel genutzt werden sollen...
-# Für diesen Anwendungsfall ist dIngle eben eigentlich nicht konzipiert.
 
 ; sub dispatch
     { my ($self,$pipe) = @_
@@ -37,7 +21,7 @@
     ; my $query = $store->get('dIngle::Query')
     
     ; unless($query)
-        { $self->log("warn","Kein Requestobjekt vorhanden?")
+        { $self->log("warn","Found no request object dIngle::Query.")
         ; return undef
         }
         
@@ -45,7 +29,7 @@
     ; my $style = pop(@fp) || 'nostyle'
     ; my $frmtd = join("/",@fp)
     
-    ; my $dingle = new dIngle
+    ; my $dingle = dIngle->new
         ( VisStyle     => $style
         , VisFormatdir => $frmtd
         , VisFile      => basename($query->site,".html")

@@ -115,7 +115,7 @@ eine solche Synchronisation im Hintergrund aber empfehlenswert.
         }
     ; $query{'param'} = \@param
     
-    ; return new dIngle::Query(%query)
+    ; return new dIngle::Query::(%query)
     }
 
 ; 1

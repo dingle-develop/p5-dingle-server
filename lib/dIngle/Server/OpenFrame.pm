@@ -1,5 +1,5 @@
   package dIngle::Server::OpenFrame
-# ***********************************
+# *********************************
 ; our $VERSION='0.01'
 # *******************
 ; use strict; use warnings; use utf8
@@ -30,6 +30,7 @@
 
 ; sub run
     { my ($self)=@_
+    ; local $@
     ; my $pipeline = $self->pipeline
     ; $self->_shutdown(0)
     ; while((my $c = $self->server->accept()) && !($self->_shutdown))
@@ -40,7 +41,11 @@
 
             ; $pipeline->store( $store->set(@r) )
 
-            ; $pipeline->dispatch()
+            ; eval { $pipeline->dispatch() }
+	        ; if($@)
+	            { warn $@->stacktrace if ref $@
+                ; die $@
+                }
             ; my $response = $pipeline->store->get($self->response_key)
             ; $c->send_response( $response )
             }

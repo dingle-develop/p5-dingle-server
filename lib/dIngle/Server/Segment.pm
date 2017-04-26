@@ -6,6 +6,7 @@
 ; use parent qw ( Pipeline::Segment OpenFrame::Object )
 
 ; use OpenFrame::Response
+; use Data::Dumper
 
 =head1 NAME
 
@@ -47,13 +48,14 @@ default Seite.
     
 ; sub handle_exception
     { my ($self,$e)=@_
+    ; warn Dumper($e)
     ; if( UNIVERSAL::isa($e,'dIngle::Error') )
         { return $e
         }
       elsif( ref $e ) # oops, unknown exception object
         { return $self->error()->new
             ( msgid => 'Unknown error.'
-            , dbginfo => Dumper($e)
+            , dbginfo => Data::Dumper::Dumper($e)
             )
         }
       else
